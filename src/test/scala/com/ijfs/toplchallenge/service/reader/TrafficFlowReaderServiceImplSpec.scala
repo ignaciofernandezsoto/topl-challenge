@@ -12,6 +12,8 @@ import org.scalatest.GivenWhenThen
 import org.scalatest.featurespec.AsyncFeatureSpec
 import org.scalatest.matchers.must.Matchers
 
+import java.io.FileNotFoundException
+
 class TrafficFlowReaderServiceImplSpec
   extends AsyncFeatureSpec
     with GivenWhenThen
@@ -76,11 +78,26 @@ class TrafficFlowReaderServiceImplSpec
 
   }
 
+  Scenario("on a non existent file, a parse failure with a file not found exception should be returned") {
+    Given("a non existent file")
+    val fileName = NON_EXISTENT_ERROR_FILE_NAME
+
+    When("reader is called")
+    val result = readerService.read(fileName)
+
+    Then("a parse failure with a file not found exception should be returned")
+    result.unsafeToFuture() map {
+      case Left(ParseException(_: FileNotFoundException)) => succeed
+      case e => fail(s"Not expected to receive $e")
+    }
+  }
+
 }
 
 object TrafficFlowReaderServiceImplSpec {
 
   private final val CORRECT_FILE_NAME = "./src/test/resources/correct-sample-data.json"
   private final val DECODING_ERROR_FILE_NAME = "./src/test/resources/incorrect-sample-data.json"
+  private final val NON_EXISTENT_ERROR_FILE_NAME = "./src/test/resources/non-existent-sample-data.json"
 
 }
