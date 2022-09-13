@@ -22,3 +22,8 @@ libraryDependencies ++= Seq(
 ) ++ Seq(
   "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
 )
+
+enablePlugins(JavaAppPackaging)
+enablePlugins(DockerPlugin)
+
+dockerBaseImage := "openjdk:8-jdk"
