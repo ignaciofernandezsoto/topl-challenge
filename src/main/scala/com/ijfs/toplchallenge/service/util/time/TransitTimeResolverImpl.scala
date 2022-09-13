@@ -50,11 +50,11 @@ class TransitTimeResolverImpl
       .sortBy(_.measurementTime) match
       case ::(DatedTransitTime(_, transitTime), Nil) => transitTime
       case ::(DatedTransitTime(measurementTime, transitTime), next) =>
-        val weightedTransitTimes = DatedTransitTime(measurementTime, transitTime * firstWeightedAverage / 100) :: next map {
+        val weightedTransitTimes = DatedTransitTime(measurementTime, transitTime * firstWeightedAverage) :: (next map {
           case dtt @ DatedTransitTime(_, transitTime) =>
-            dtt.copy(transitTime = transitTime * measurementsPlusOneCountAverage / 100)
-        }
-        doAverage(weightedTransitTimes.toSet)
+            dtt.copy(transitTime = transitTime * measurementsPlusOneCountAverage)
+        })
+        weightedTransitTimes.map(_.transitTime).sum / weightTotal
       case Nil => 0d // TODO use refined
   }
 

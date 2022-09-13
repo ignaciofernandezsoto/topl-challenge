@@ -296,7 +296,7 @@ object TransitTimeResolverImplSpec {
   private final val AVERAGE_TRANSIT_TIME_01_02 = 110d
   private final val AVERAGE_TRANSIT_TIME_03_04 = 11000d
 
-  private final val WEIGHTED_AVERAGE_TRANSIT_TIME_01_02 = 35.55555555555556d
-  private final val WEIGHTED_AVERAGE_TRANSIT_TIME_03_04 = 3555.555555555556d
+  private final val WEIGHTED_AVERAGE_TRANSIT_TIME_01_02 = 80d
+  private final val WEIGHTED_AVERAGE_TRANSIT_TIME_03_04 = 8000d
 
 }
